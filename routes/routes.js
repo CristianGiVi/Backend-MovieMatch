@@ -1,5 +1,5 @@
 const Express = require("express");
-const mysqlController = require('../controllers/uploadDataBaseController')
+const mysqlController = require('../Controllers/uploadDataBaseController')
 
 const Router = Express.Router();
 
