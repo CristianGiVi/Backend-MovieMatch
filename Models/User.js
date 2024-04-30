@@ -15,6 +15,9 @@ const User = DataBase.define('User', {
     },
     lastName: {
         type: Sequelize.STRING(100)
+    },
+    password: {
+        type: Sequelize.STRING(100)
     }
 });
 
