@@ -21,6 +21,9 @@ const Movie = DataBase.define('Movie', {
     },
     length: {
         type: Sequelize.INTEGER
+    },
+    category: {
+        type: Sequelize.STRING(100)
     }
 });
 

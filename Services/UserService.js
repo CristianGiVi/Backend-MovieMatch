@@ -1,4 +1,5 @@
 const User = require("../Models/User");
+const Joi = require("@hapi/joi");
 
 async function getAllUsers() {
   try {
@@ -13,22 +14,82 @@ async function getAllUsers() {
   }
 }
 
-async function getUserById(userId) {
+async function getUserById(id) {
   try {
-    let user = await User.findByPk(userId);
+    let user = await User.findOne({
+        raw:true,
+        where:
+        {
+            'id':id
+        }
+    });
 
     if (!user) {
-      throw new Error('Usuario no encontrado');
+      return null;
     }
 
     return user;
   } catch (error) {
-    throw error;
+    return error;
   }
+}
+
+async function join(email, password, name, lastName) {
+  try {
+    const schema = Joi.object({
+      schemaEmail: Joi.string().email().required().messages({'any.required': "El campo email es obligatorio"}),
+      schemaPassword: Joi.string().min(1).required().messages({'any.required': "El campo password es obligatorio"}),
+      schemaName: Joi.string().required().messages({'any.required': "El campo name es obligatorio"}),
+      schemaLastName: Joi.string().required().messages({'any.required': "El campo lastName es obligatorio"})
+    });
+
+    const {error,value} = schema.validate({
+      schemaEmail:email,
+      schemaPassword:password,
+      schemaName: name,
+      schemaLastName: lastName
+    });
+
+    if(error){
+      return {message: error.details[0].message, http: 400}      
+    }
+            
+    let user = await User.findOne({
+        raw:true,
+        where:
+            {
+                'email':email
+            }
+    });     
+        
+    if(user){
+        return {message: "Ya existe una cuenta con este correo", http: 400};                
+    }
+
+    let save = await User.create(
+      {
+          email:email,
+          password:password,
+          name: name,
+          lastName: lastName
+      }
+  );
+
+    if(!save){
+        return {message: "Ocurrio un error al guardar", http: 500}
+    }else{
+        return {message: "Se ha creado el registro exitosamente", http: 201};
+    }
+    
+
+  } catch (error) {
+    return {mensaje: error.mensaje, httpL: 500};           
+}
 }
 
 
 module.exports = {
     getAllUsers,
-    getUserById
+    getUserById,
+    join
 };
