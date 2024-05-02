@@ -1,9 +1,9 @@
 const Sequelize = require('sequelize');
 const DataBase = require('../Database/mysqldb');
-const User = require('../Models/User');
-const Movie = require('../Models/Movie')
+const User = require('./User');
+const Movie = require('./Movie')
 
-const Profile = DataBase.define('Profile', {
+const Review = DataBase.define('Review', {
     id: {
         type: Sequelize.INTEGER,
         primaryKey: true,
@@ -21,12 +21,12 @@ const Profile = DataBase.define('Profile', {
     }
 });
 
-Profile.belongsTo(User, {
+Review.belongsTo(User, {
     foreignKey: 'user_id'
 });
 
-Profile.belongsTo(Movie, {
+Review.belongsTo(Movie, {
     foreignKey: 'movie_id'
 });
 
-module.exports = Profile;
+module.exports = Review;

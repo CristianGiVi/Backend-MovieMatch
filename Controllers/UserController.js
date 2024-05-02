@@ -5,7 +5,6 @@ exports.getAllUsers = async (request, response) => {
       const users = await UserServices.getAllUsers();
       return response.status(200).json(users);
     } catch (error) {
-      console.log(error);
       return response.status(400).json({ mensaje: error.message });
     }
 };

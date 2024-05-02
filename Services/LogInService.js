@@ -49,6 +49,7 @@ async function logIn(email, password){
         return {mensaje: error.mensaje, httpL: 500};           
     }
 }
+  
 
 
 module.exports = {
