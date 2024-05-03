@@ -9,9 +9,6 @@ const Actor = DataBase.define('Actor', {
     }, 
     name: {
         type: Sequelize.STRING(100)
-    },
-    lastName: {
-        type: Sequelize.STRING(100)
     }
 });
 
