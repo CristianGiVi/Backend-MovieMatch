@@ -14,7 +14,7 @@ exports.getOneUser = async (request, response) => {
     const {id} = request.params;
     const user = await UserServices.getUserById(id);
     if (!user) {
-      return response.status(400).json({ mensaje: 'Usuario no encontrado' });
+      return response.status(400).json({ mensaje: 'No existe un usuario con esta id' });
     }
     return response.status(200).json(user);
   } catch (error) {

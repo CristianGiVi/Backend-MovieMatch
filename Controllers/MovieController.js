@@ -14,8 +14,8 @@ exports.getMovieDetails = async (request, response) => {
     try {
         const {id} = request.params;
         const {movie, http} = await MovieService.getMovieById(id);
-        if (movie) {
-            return response.status(http).json({ message: 'Usuario no encontrado' });
+        if (!movie) {
+            return response.status(http).json({ message: 'No existe una pelicula con esta id' });
         }
         return response.status(200).json(movie);
     } catch (error) {

@@ -36,17 +36,17 @@ async function logIn(email, password){
         }
 
         let payload = {
-        id: user.id,
-        email: user.email,
-        iat: moment().unix(),
-        exp: moment().add(1, 'days').unix()
+            id: user.id,
+            email: user.email,
+            iat: moment().unix(),
+            exp: moment().add(1, 'days').unix()
         };
 
         let token = jwt.encode(payload, process.env.SECRET);
-        return {token: token, message: "Se han ingresado los datos correctametne", http: 200};
+        return {token: token, message: "Se han ingresado los datos correctamente", http: 200};
   
     } catch (error) {
-        return {mensaje: error.mensaje, httpL: 500};           
+        return {mensaje: error.mensaje, http: 500};           
     }
 }
   

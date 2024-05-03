@@ -2,9 +2,9 @@ const User = require("../Models/User");
 const Joi = require("@hapi/joi");
 
 async function getAllUsers() {
-  try {
-    let users = await User.findAll({
-      order: [["id", "desc"]],
+    try {
+      let users = await User.findAll({
+        order: [["id", "desc"]],
       raw: true,
     });
 
@@ -73,7 +73,7 @@ async function join(email, password, name, lastName) {
           name: name,
           lastName: lastName
       }
-  );
+    );
 
     if(!save){
         return {message: "Ocurrio un error al guardar", http: 500}

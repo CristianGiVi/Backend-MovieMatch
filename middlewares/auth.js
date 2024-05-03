@@ -22,3 +22,9 @@ exports.authenticateToken = (request, response, next) =>{
     request.user = payload;
     next();
 }
+
+exports.getUserData = (request) =>{
+    let token = request.headers.authorization.replace(/Bearer\s+|['"]+/g, '');
+    let payload = jwt.decode(token, process.env.SECRET);
+    return {userId: payload.id, userEmail: payload.email}
+}
