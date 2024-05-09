@@ -16,7 +16,7 @@ async function logIn(email, password){
         });
   
         if(error){
-            return {message: error.details[0].message, http: 400}      
+            return {message: error.details[0].message, status: 400}      
         }
               
         let user = await User.findOne({
@@ -28,11 +28,11 @@ async function logIn(email, password){
         }); 
         
         if(!user){
-            return {message: "No existe una cuenta con este correo", http: 400};                
+            return {message: "No existe una cuenta con este correo", status: 400};                
         }
 
         if(!(password.trim() == user.password.trim())){
-          return {message: "La contraseña ingresada es erronea", http: 400};
+          return {message: "La contraseña ingresada es erronea", status: 400};
         }
 
         let payload = {
@@ -43,10 +43,10 @@ async function logIn(email, password){
         };
 
         let token = jwt.encode(payload, process.env.SECRET);
-        return {token: token, message: "Se han ingresado los datos correctamente", http: 200};
+        return {token: token, message: "Se han ingresado los datos correctamente", status: 200};
   
     } catch (error) {
-        return {mensaje: error.mensaje, http: 500};           
+        return {mensaje: error.mensaje, status: 500};           
     }
 }
   

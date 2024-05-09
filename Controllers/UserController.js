@@ -28,12 +28,12 @@ exports.join = async (request, response)=>{
   try{
     const {email, password, name, lastName} = request.body;
     const value = await UserServices.join(email, password, name, lastName);
-    if(value.http != 201){
-      return response.status(value.http).json(value.message);
+    if(value.status != 201){
+      return response.status(value.status).json({mesagge: value.message, status: value.status});
     }
-    return response.status(201).json(value.message);
+    return response.status(201).json({mesagge: value.message, status: value.status});
   } catch(error) {
-    return response.status(400).json({ mensaje: error.message });
+    return response.status(500).json({ message: error.message, status: 500});
   }
 
 }

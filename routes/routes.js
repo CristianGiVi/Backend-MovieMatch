@@ -1,6 +1,6 @@
 const Express = require("express");
 const UserController = require('../Controllers/UserController');
-const LogInController = require('../Controllers/LoginController');
+const LogInController = require('../Controllers/LogInController');
 const MovieController = require('../Controllers/MovieController');
 const ReviewController = require('../Controllers/ReviewController');
 const Auth = require('../middlewares/auth');

@@ -51,7 +51,7 @@ async function join(email, password, name, lastName) {
     });
 
     if(error){
-      return {message: error.details[0].message, http: 400}      
+      return {message: error.details[0].message, status: 400}      
     }
             
     let user = await User.findOne({
@@ -63,7 +63,7 @@ async function join(email, password, name, lastName) {
     });     
         
     if(user){
-        return {message: "Ya existe una cuenta con este correo", http: 400};                
+        return {message: "Ya existe una cuenta con este correo", status: 400};                
     }
 
     let save = await User.create(
@@ -76,14 +76,14 @@ async function join(email, password, name, lastName) {
     );
 
     if(!save){
-        return {message: "Ocurrio un error al guardar", http: 500}
+        return {message: "Ocurrio un error al guardar", status: 500}
     }else{
-        return {message: "Se ha creado el registro exitosamente", http: 201};
+        return {message: "Se ha creado el registro exitosamente", status: 201};
     }
     
 
   } catch (error) {
-    return {mensaje: error.mensaje, httpL: 500};           
+    return {mensaje: error.mensaje, status: 500};           
 }
 }
 
