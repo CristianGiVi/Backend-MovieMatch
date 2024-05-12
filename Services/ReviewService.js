@@ -11,7 +11,7 @@ async function findAllMoviesReviewed(userId) {
         });
 
         if (!reviews || reviews.length == 0) {
-            return { movies: null, message: "No tienes reseñas de películas", http: 400 };
+            return { movies: null, message: "No tienes reseñas de películas"};
         }
 
         const reviewedMovies = reviews.map(review => {
@@ -22,9 +22,9 @@ async function findAllMoviesReviewed(userId) {
             };
         });
 
-        return {movies: reviewedMovies, http: 200};
+        return {movies: reviewedMovies};
     } catch (error) {
-        return {movies: null, message: error.message, http: 500};
+        return {movies: null, message: error.message};
     }
 }
 

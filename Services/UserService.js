@@ -10,7 +10,7 @@ async function getAllUsers() {
 
     return users;
   } catch (error) {
-    throw error;
+    return error;
   }
 }
 

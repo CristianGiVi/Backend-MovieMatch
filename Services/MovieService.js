@@ -9,7 +9,7 @@ async function getAllMovies() {
         });
         return movies;
     } catch (error) {
-        return {message: error.mensaje, http: 500}; 
+        return {message: error.mensaje, status: 500}; 
     }
 }
   
@@ -24,13 +24,13 @@ async function getAllMovies() {
         });
   
         if(!movie) {
-            return {movie: null, http: 400};
+            return {movie: null, status: 400};
         }
 
-        return {movie: movie, http: 200};
+        return {movie: movie, status: 200};
 
     } catch (error) {
-        return {message: error.message, http: 500}; 
+        return {message: error.message, status: 500}; 
     }
 }
 
