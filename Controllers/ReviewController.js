@@ -54,7 +54,7 @@ exports.createReview = async (request, response) => {
             return response.status(data.status).json({ message: data.message, status: data.status });
         }
         
-        return response.status(200).json({review: review, status:201});
+        return response.status(200).json({review: data.review, status:201});
     } catch (error) {
         return response.status(500).json({ message: error.message, status: 500 });
     }   
