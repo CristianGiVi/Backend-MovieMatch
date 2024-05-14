@@ -1,25 +1,29 @@
+// Importación de Sequelize para la conexión a la base de datos
 const Sequalize = require('sequelize');
+// Importación de dotenv para la configuración de variables de entorno
 require('dotenv').config();
 
+// Creación de la instancia de la base de datos utilizando Sequelize
 const DB = new Sequalize(
-    process.env.DB_NAME, 
-    process.env.DB_USER, 
-    process.env.DB_PASSWORD,
+    process.env.DB_NAME,    // Nombre de la base de datos obtenido de las variables de entorno
+    process.env.DB_USER,    // Usuario de la base de datos obtenido de las variables de entorno
+    process.env.DB_PASSWORD,    // Contraseña de la base de datos obtenida de las variables de entorno
     {
-        host:'localhost',
-        dialect: 'mysql',
-        port: '3306',
-        logging: false,
+        host:'localhost',   // Host de la base de datos
+        dialect: 'mysql',   // Tipo de dialecto de la base de datos
+        port: '3306',   // Puerto de la base de datos
+        logging: false, // Deshabilitar los logs de Sequelize
         define:{
-            timestamps: false
+            timestamps: false   // Deshabilitar la generación automática de timestamps en los modelos
         },
         pool: {
-            max: 5,
-            min: 0,
-            acquire: 30000,
-            idle: 10000
+            max: 5,   // Número máximo de conexiones en el pool
+            min: 0,     // Número mínimo de conexiones en el pool
+            acquire: 30000,     // Tiempo máximo de adquisición de conexión (en milisegundos)
+            idle: 10000     // Tiempo máximo de inactividad de la conexión (en milisegundos)
         }
     }
 );
 
+// Exportación de la instancia de la base de datos para su uso en otras partes de la aplicación
 module.exports = DB;

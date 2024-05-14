@@ -1,14 +1,25 @@
-const LogInServices = require('../Services/LogInService')
+// Importación del servicio de inicio de sesión
+const LogInServices = require("../Services/LogInService");
 
-exports.logIn = async (request, response)=>{ 
-    try{
-      const {email, password} = request.body;
-      const value = await LogInServices.logIn(email, password);
-      if(value.status != 200){
-        return response.status(value.status).json({mesagge: value.message, status: value.status});
-      }
-      return response.status(200).json({ mesagge: value.message, token: value.token, status: value.status});
-    } catch(error) {
-      return response.status(400).json({ message: error.message, status: 500});
+// Controlador para la ruta de inicio de sesión
+exports.logIn = async (request, response) => {
+  try {
+    // Obtener el correo electrónico y la contraseña de la solicitud
+    const { email, password } = request.body;
+    // Llamar al servicio de inicio de sesión para autenticar al usuario
+    const data = await LogInServices.logIn(email, password);
+
+    // Verificar si el servicio devolvió un estado diferente de 200 (éxito)
+    if (data.status != 200) {
+      // Devolver una respuesta con el estado y el mensaje del servicio
+      return response
+        .status(data.status)
+        .json({ mesagge: data.message, status: data.status });
     }
+
+    // Si el servicio devolvió un estado de 200, devolver el token y el estado en la respuesta
+    return response.status(200).json({user: data.user, token: data.token, status: data.status});
+  } catch (error) {
+    return response.status(500).json({ message: error.message, status: 500 });
   }
+};

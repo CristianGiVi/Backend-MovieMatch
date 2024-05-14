@@ -1,40 +1,24 @@
-const UserServices = require('../Services/UserService')
+// Importación del servicio UserService para registrar usuarios
+const UserServices = require("../Services/UserService");
 
-exports.getAllUsers = async (request, response) => {
-    try {
-      const users = await UserServices.getAllUsers();
-      return response.status(200).json(users);
-    } catch (error) {
-      return response.status(400).json({ mensaje: error.message });
-    }
-};
-
-exports.getOneUser = async (request, response) => {
+// Controlador para la ruta de registro de usuarios
+exports.join = async (request, response) => {
   try {
-    const {id} = request.params;
-    const user = await UserServices.getUserById(id);
-    if (!user) {
-      return response.status(400).json({ mensaje: 'No existe un usuario con esta id' });
+    // Obtener los datos del cuerpo de la solicitud
+    const { email, password, name, lastName } = request.body;
+    // Llamar al servicio UserService para registrar al usuario
+    const data = await UserServices.join(email, password, name, lastName);
+
+    // Verificar si el servicio devolvió un estado diferente de 201 (creado)
+    if (data.status != 201) {
+      return response
+        .status(data.status)
+        .json({ mesagge: data.message, status: data.status });
     }
-    return response.status(200).json(user);
+    return response
+      .status(201)
+      .json({ mesagge: data.message, status: data.status });
   } catch (error) {
-    return response.status(400).json({ mensaje: error.message });
+    return response.status(500).json({ message: error.message, status: 500 });
   }
-  
-}
-
-exports.join = async (request, response)=>{ 
-
-  try{
-    const {email, password, name, lastName} = request.body;
-    const value = await UserServices.join(email, password, name, lastName);
-    if(value.status != 201){
-      return response.status(value.status).json({mesagge: value.message, status: value.status});
-    }
-    return response.status(201).json({mesagge: value.message, status: value.status});
-  } catch(error) {
-    return response.status(500).json({ message: error.message, status: 500});
-  }
-
-}
-
+};
