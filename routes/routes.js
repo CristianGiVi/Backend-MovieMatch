@@ -22,7 +22,7 @@ Router.post(`${PAGE_ROUTE}/join`, UserController.join);
 Router.post(`${PAGE_ROUTE}/login`, LogInController.logIn);
 
 // Películas
-const SUB_PATH_MOVIE = "movie"
+const SUB_PATH_MOVIE = "movies"
 
 // Rutas para obtener todas las películas y detalles de una película específica
 Router.get(`${PAGE_ROUTE}/${SUB_PATH_MOVIE}`, MovieController.getAllMovies);
