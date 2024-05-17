@@ -62,9 +62,9 @@ async function logIn(email, password) {
     let token = jwt.encode(payload, process.env.SECRET);
 
     // Devolver el token generado y un mensaje de éxito
-    return { token: token, status: 200, user: user};
+    return { token: token, status: 200};
   } catch (error) {
-    return { message: error.mensaje, status: 500 };
+    return { mesagge: error.mesagge, status: 500 };
   }
 }
 

@@ -56,7 +56,8 @@ async function findAllReviews(movieId) {
                 userName: review.User.name,
                 userLastName: review.User.lastName,
                 rating: review.rating,
-                comment: review.comment
+                comment: review.comment,
+                id: review.id
             };
         });
 

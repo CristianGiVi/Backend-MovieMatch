@@ -33,7 +33,7 @@ const SUB_PATH_REVIEWS= "reviews"
 
 // Rutas para obtener todas las películas reseñadas, todas las reseñas de una película y crear una reseña
 Router.get(`${PAGE_ROUTE}/${SUB_PATH_REVIEWS}`, [Auth.authenticateToken], ReviewController.getAllMoviesReviewed);
-Router.get(`${PAGE_ROUTE}/${SUB_PATH_REVIEWS}/movie/:id`, [Auth.authenticateToken], ReviewController.getAllReviewsMovie);
+Router.get(`${PAGE_ROUTE}/${SUB_PATH_REVIEWS}/movie/:id`, ReviewController.getAllReviewsMovie);
 Router.post(`${PAGE_ROUTE}/${SUB_PATH_REVIEWS}/create/:movieId`, [Auth.authenticateToken], ReviewController.createReview);
 
 // Exportar el enrutador para usarlo en otros archivos

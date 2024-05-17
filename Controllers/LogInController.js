@@ -18,8 +18,8 @@ exports.logIn = async (request, response) => {
     }
 
     // Si el servicio devolvió un estado de 200, devolver el token y el estado en la respuesta
-    return response.status(200).json({user: data.user, token: data.token, status: data.status});
+    return response.status(200).json({token: data.token, status: 200});
   } catch (error) {
-    return response.status(500).json({ message: error.message, status: 500 });
+    return response.status(500).json({ mesagge: error.message, status: 500 });
   }
 };
