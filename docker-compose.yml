@@ -1,0 +1,40 @@
+version: "3.9"
+
+services:
+  moviematchbackend:
+    build: .
+    ports:
+      - "3000:3000"
+    links:
+      - moviematchdatabase
+    environment:
+      - PORT=3000
+      - DB_USER=root
+      - DB_NAME=bdmoviematch
+      - DB_PASSWORD=
+      - SECRET=123456789
+    depends_on:
+      - moviematchdatabase
+    networks:
+      - moviematch_network
+
+  moviematchdatabase:
+    image: mysql
+    ports:
+      - "3306:3306"
+    environment:
+      - MYSQL_ROOT_PASSWORD=
+      - MYSQL_DATABASE=bdmoviematch
+      - MYSQL_ALLOW_EMPTY_PASSWORD=true
+    volumes:
+      - moviematch-data:/var/lib/mysql
+    networks:
+      - moviematch_network
+
+volumes:
+  moviematch-data:
+
+
+networks:
+  moviematch_network:
+    external: true

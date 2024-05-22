@@ -22,7 +22,8 @@ app.use(Cors());
 // -------------------------
 
 // Rutas
-app.use("/", require("./Routes/Routes"));
+app.use("/", require("./Routes/routes.js"));
+
 // -----------------------
 
 // Conexion base de datos
