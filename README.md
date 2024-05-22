@@ -25,7 +25,6 @@ usuarios registrados explorar, calificar y escribir reseñas sobre contenido aud
 - Sequelize: ORM para Node.js que facilita la interacción con la base de datos MySQL.
 - JSON Web Tokens (JWT): Para la autenticación y manejo de sesiones de usuarios.
 
-
 ## Instalación y Uso
 
 1. Clona el repositorio en tu máquina local:
