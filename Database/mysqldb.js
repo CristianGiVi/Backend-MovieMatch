@@ -1,15 +1,15 @@
 // Importación de Sequelize para la conexión a la base de datos
-const Sequalize = require('sequelize');
+const Sequelize = require('sequelize');
 // Importación de dotenv para la configuración de variables de entorno
 require('dotenv').config();
 
 // Creación de la instancia de la base de datos utilizando Sequelize
-const DB = new Sequalize(
+const DB = new Sequelize(
     process.env.DB_NAME,    // Nombre de la base de datos obtenido de las variables de entorno
     process.env.DB_USER,    // Usuario de la base de datos obtenido de las variables de entorno
     process.env.DB_PASSWORD,    // Contraseña de la base de datos obtenida de las variables de entorno
     {
-        host:'localhost',   // Host de la base de datos
+        host: 'moviematchdatabase',   // Nombre del servicio Docker como host de la base de datos
         dialect: 'mysql',   // Tipo de dialecto de la base de datos
         port: '3306',   // Puerto de la base de datos
         logging: false, // Deshabilitar los logs de Sequelize
