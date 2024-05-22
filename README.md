@@ -24,7 +24,6 @@ usuarios registrados explorar, calificar y escribir reseñas sobre contenido aud
 - Express.js: Framework web de Node.js para la creación de APIs RESTful.
 - Sequelize: ORM para Node.js que facilita la interacción con la base de datos MySQL.
 - JSON Web Tokens (JWT): Para la autenticación y manejo de sesiones de usuarios.
-- Swagger: Herramienta para la documentación de APIs RESTful.
 
 ## Instalación y Uso
 
