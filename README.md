@@ -27,6 +27,10 @@ usuarios registrados explorar, calificar y escribir reseñas sobre contenido aud
 
 ## Instalación y Uso
 
+Requisitos previos:
+
+- Docker instalado en tu sistema.
+
 1. Clona el repositorio en tu máquina local:
 
 2. Navega al directorio del proyecto e instala las dependencias.
@@ -38,7 +42,9 @@ usuarios registrados explorar, calificar y escribir reseñas sobre contenido aud
 - DB_PASSWORD
 - SECRET
 
-4. Inicia la aplicación en modo de desarrollo.
+4. Inicia la aplicacion usando los comandos de docker: docker-compose up -d
+
+(En caso de error, ejecuta primero la base de datos y despues el contenedor del backend)
 
 ## Contribución
 
