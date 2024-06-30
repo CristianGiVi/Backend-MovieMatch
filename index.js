@@ -22,7 +22,7 @@ app.use(Cors());
 // -------------------------
 
 // Rutas
-app.use("/", require("./Routes/routes.js"));
+app.use("/", require("./routes/routes.js"));
 
 // -----------------------
 
