@@ -1,39 +1,29 @@
-// Importación de Sequelize para definir el modelo
-const Sequelize = require('sequelize');
-// Importación de la instancia de la base de datos
-const DataBase = require('../Database/mysqldb');
-// Importación de los modelos User y Movie
-const User = require('./User');
-const Movie = require('./Movie')
+// Importación de mongoose para definir el esquema
+const mongoose = require('mongoose');
 
-// Definición del modelo Review en la base de datos
-const Review = DataBase.define('Review', {
-    id: {
-        type: Sequelize.INTEGER,
-        primaryKey: true,
-        autoIncrement: true
-    }, 
+// Definición del esquema Review en la base de datos MongoDB
+const ReviewSchema = new mongoose.Schema({
     rating: {
-        type: Sequelize.FLOAT,
-        validate: {
-            min: 0.0,
-            max: 10.0
-        }
+        type: Number,
+        required: true,
+        min: 0.0,
+        max: 10.0
     },
     comment: {
-        type: Sequelize.TEXT('long')
+        type: String,
+        required: true
+    },
+    user_id: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'User',
+        required: true
+    },
+    movie_id: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Movie',
+        required: true
     }
 });
 
-// Establecimiento de la relación entre Review y User
-Review.belongsTo(User, {
-    foreignKey: 'user_id'
-});
-
-// Establecimiento de la relación entre Review y Movie
-Review.belongsTo(Movie, {
-    foreignKey: 'movie_id'
-});
-
 // Exportación del modelo Review para su uso en otras partes de la aplicación
-module.exports = Review;
+module.exports = mongoose.model('Review', ReviewSchema);

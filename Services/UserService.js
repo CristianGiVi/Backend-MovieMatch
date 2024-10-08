@@ -2,6 +2,8 @@
 const User = require("../Models/User");
 // Importación de Joi para la validación de datos
 const Joi = require("@hapi/joi");
+// Importación de bcrypt para encriptar las contraseñas
+const bcrypt = require("bcrypt");
 
 // Función para registrar un nuevo usuario
 async function join(email, password, name, lastName) {
@@ -37,39 +39,52 @@ async function join(email, password, name, lastName) {
       return { message: error.details[0].message, status: 400 };
     }
 
-    // Buscar al usuario en la base de datos por su correo electrónico
-    let user = await User.findOne({
-      raw: true,
-      where: {
-        email: email,
-      },
-    });
-
     // Verificar si ya existe un usuario con el correo proporcionado
+    let user = await User.findOne({ email: email });
     if (user) {
       return { message: "Ya existe una cuenta con este correo", status: 400 };
     }
 
-    // Crear un nuevo usuario en la base de datos
-    let save = await User.create({
+    // Encriptar la contraseña ingresada antes de guardarla en la base de datos
+    const hashedPassword = await bcrypt.hash(password, 10);
+
+    // Crear un nuevo usuario con los datos proporcionados
+    let newUser = new User({
       email: email,
-      password: password,
+      password: hashedPassword,
       name: name,
       lastName: lastName,
     });
 
+    // Guardar el nuevo usuario en la base de datos
+    let save = await newUser.save();
+
     // Verificar si se guardó correctamente el nuevo usuario
     if (!save) {
-      return { message: "Ocurrio un error al guardar", status: 500 };
+      return {
+        message: "Ocurrió un error crear el nuevo usuario",
+        status: 500,
+      };
     } else {
-      return { message: "Se ha creado el registro exitosamente", status: 201 };
+      return { user: save, status: 201 };
     }
   } catch (error) {
     return { message: error.message, status: 500 };
   }
 }
 
-// Exportar la función join para su uso en otras partes de la aplicación
+// Función para mostrar todos los usuarios existentes
+async function getAllUsers() {
+  try {
+    let users = await User.find();
+    return { users: users, status: 200 };
+  } catch (error) {
+    return { message: error.message, status: 500 };
+  }
+}
+
+// Exportar las funciones para su uso en otras partes de la aplicación
 module.exports = {
   join,
+  getAllUsers,
 };

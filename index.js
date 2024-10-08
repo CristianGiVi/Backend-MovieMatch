@@ -1,9 +1,9 @@
 const Express = require('express');
-const Mysql = require('./Database/mysqldb')
 const SwaggerJsDoc = require('swagger-jsdoc');
 const SwaggerUi = require('swagger-ui-express');
 const BodyParser = require("body-parser");
 const Cors = require('cors');
+
 
 // Crear una instancia de la aplicación Express
 const app = Express();
@@ -26,31 +26,19 @@ app.use("/", require("./routes/routes.js"));
 
 // -----------------------
 
-// Conexion base de datos
-Mysql.sync()
-    .then(() => {
-        console.log("Conectados a la base de datos")
-    })
-    .catch(error => {
-        console.log(error)
-    });
+// Conexion base de datos con mongodb
 
-require("./Models/User");
-require("./Models/Actor");
-require("./Models/Contract");
-require("./Models/Movie");
-require("./Models/Review");
+require('./Database/Mongodb.js');
+
 // ------------------------------------------
 
 
 // Personalizar pagina 404
 app.use(function (request, response) {
-    response.status(404).json({
-        mensaje: "Error 404 - Pagina no encontrada"
-    });
+    response.status(404).json("Error 404 - Pagina no encontrada");
 });
 // ------------------------------------------
 
 app.listen(process.env.PORT, () => {
-    console.log("Backend corriendo con exito en el servidor: " + process.env.PORT)
+    console.log("Backend corriendo con exito en el puerto: " + process.env.PORT)
 });
