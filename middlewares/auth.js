@@ -8,7 +8,7 @@ exports.authenticateToken = (request, response, next) =>{
 
     // Verificar si la solicitud contiene la cabecera de autorización
     if(!request.headers.authorization){
-        return response.status(401).json({mensaje: "La peticion no esta autorizada", status: 401})
+        return response.status(401).json("La peticion no esta autorizada")
     }
 
     // Obtener el token de la cabecera de autorización
@@ -20,12 +20,12 @@ exports.authenticateToken = (request, response, next) =>{
 
         // Verificar si el token ha expirado
         if(payload.exp <= moment().unix()){
-            return response.status(401).json({mensaje: "El token ha expirado", status: 401})
+            return response.status(401).json("El token ha expirado")
         }
         
     } catch(error){
         // Manejar errores al decodificar el token
-        return response.status(401).json({mensaje: "El token no es valido", status: 401})
+        return response.status(401).json("El token no es valido")
     }
 
     // Asignar el payload del token decodificado al objeto de solicitud para su uso posterior

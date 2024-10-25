@@ -13,7 +13,8 @@ const Router = Express.Router();
 let PAGE_ROUTE = "/moviematch";
 
 // Users
-const SUB_PATH_USER = "user"
+const SUB_PATH_USER = "users"
+Router.get(`${PAGE_ROUTE}/${SUB_PATH_USER}`, UserController.getAllUsers);
 
 // Ruta para registrarse a la aplicación
 Router.post(`${PAGE_ROUTE}/join`, UserController.join);
@@ -27,6 +28,9 @@ const SUB_PATH_MOVIE = "movies"
 // Rutas para obtener todas las películas y detalles de una película específica
 Router.get(`${PAGE_ROUTE}/${SUB_PATH_MOVIE}`, MovieController.getAllMovies);
 Router.get(`${PAGE_ROUTE}/${SUB_PATH_MOVIE}/:id`, MovieController.getMovieDetails);
+Router.post(`${PAGE_ROUTE}/${SUB_PATH_MOVIE}/create`, MovieController.createMovie);
+Router.delete(`${PAGE_ROUTE}/${SUB_PATH_MOVIE}/:id`, MovieController.deleteMovie);
+Router.put(`${PAGE_ROUTE}/${SUB_PATH_MOVIE}/:id`, MovieController.updateMovie);
 
 // Reseñas
 const SUB_PATH_REVIEWS= "reviews"
@@ -35,6 +39,7 @@ const SUB_PATH_REVIEWS= "reviews"
 Router.get(`${PAGE_ROUTE}/${SUB_PATH_REVIEWS}`, [Auth.authenticateToken], ReviewController.getAllMoviesReviewed);
 Router.get(`${PAGE_ROUTE}/${SUB_PATH_REVIEWS}/movie/:id`, ReviewController.getAllReviewsMovie);
 Router.post(`${PAGE_ROUTE}/${SUB_PATH_REVIEWS}/create/:movieId`, [Auth.authenticateToken], ReviewController.createReview);
+Router.delete(`${PAGE_ROUTE}/${SUB_PATH_REVIEWS}/:reviewId`, [Auth.authenticateToken], ReviewController.deleteReview);
 
 // Exportar el enrutador para usarlo en otros archivos
 module.exports = Router;    

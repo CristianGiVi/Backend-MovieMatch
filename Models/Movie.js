@@ -1,34 +1,40 @@
-// Importación de Sequelize para definir el modelo
-const Sequelize = require('sequelize');
-// Importación de la instancia de la base de datos
-const DataBase = require('../Database/mysqldb');
+// Importación de mongoose para definir el esquema
+const mongoose = require('mongoose');
 
-// Definición del modelo Movie en la base de datos
-const Movie = DataBase.define('Movie', {
-    id: {
-        type: Sequelize.INTEGER,
-        primaryKey: true,
-        autoIncrement: true
-    }, 
-    tittle: {
-        type: Sequelize.STRING(100)
+// Definición del esquema Movie en la base de datos MongoDB
+const MovieSchema = new mongoose.Schema({
+    title: {
+        type: String,
+        required: true,
+        unique: true,
+        maxlength: 100,
+        trim:true
     },
     yearRelease: {
-        type: Sequelize.INTEGER
+        type: Number,
+        required: true
     },
     censorBoardRating: {
-        type: Sequelize.STRING(5),
+        type: String,
+        maxlength: 5,
+        trim:true
     },
-    description: {
-        type: Sequelize.TEXT('long')
+    plot: {
+        type: String
     },
     length: {
-        type: Sequelize.INTEGER
+        type: Number,
+        required: true
     },
-    category: {
-        type: Sequelize.STRING(100)
+    genres: {
+        type: [String],
+        maxlength: 100
+    },
+    actors: {
+        type: [String],
+        required: true
     }
 });
 
 // Exportación del modelo Movie para su uso en otras partes de la aplicación
-module.exports = Movie;
+module.exports = mongoose.model('Movie', MovieSchema);

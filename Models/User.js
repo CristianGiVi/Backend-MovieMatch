@@ -1,28 +1,30 @@
-// Importación de Sequelize para definir el modelo
-const Sequelize = require('sequelize');
-// Importación de la instancia de la base de datos
-const DataBase = require('../Database/mysqldb');
+// Importación de mongoose para definir el esquema
+const mongoose = require('mongoose');
 
-// Definición del modelo User en la base de datos
-const User = DataBase.define('User', {
-    id: {
-        type: Sequelize.INTEGER,
-        primaryKey: true,
-        autoIncrement: true
-    }, 
+// Definición del esquema User en la base de datos MongoDB
+const UserSchema = new mongoose.Schema({
     email: {
-        type: Sequelize.STRING(100)
+        type: String,
+        required: true,
+        unique: true,
+        maxlength: 100
     },
     name: {
-        type: Sequelize.STRING(100)
+        type: String,
+        required: true,
+        maxlength: 100
     },
     lastName: {
-        type: Sequelize.STRING(100)
+        type: String,
+        required: true,
+        maxlength: 100
     },
     password: {
-        type: Sequelize.STRING(100)
+        type: String,
+        required: true,
+        maxlength: 100
     }
 });
 
 // Exportación del modelo User para su uso en otras partes de la aplicación
-module.exports = User;
+module.exports = mongoose.model('User', UserSchema);

@@ -6,6 +6,8 @@ const Joi = require("@hapi/joi");
 const jwt = require("jwt-simple");
 // Importación de moment para el manejo de fechas y tiempos
 const moment = require("moment");
+// Importación de bcrypt para comparar contraseñas
+const bcrypt = require("bcrypt");
 
 // Función para realizar el proceso de inicio de sesión
 async function logIn(email, password) {
@@ -32,39 +34,33 @@ async function logIn(email, password) {
       return { message: error.details[0].message, status: 400 };
     }
 
-    // Buscar al usuario en la base de datos por su correo electrónico
-    let user = await User.findOne({
-      raw: true,
-      where: {
-        email: email,
-      },
-    });
-
     // Verificar si el usuario existe en la base de datos
+    let user = await User.findOne({ email: email });
     if (!user) {
-      return { message: "No existe una cuenta con este correo", status: 404 };
+      return { message: "No existe una cuenta con este correo", status: 400 };
     }
 
-    // Verificar si la contraseña ingresada coincide con la contraseña almacenada
-    if (!(password.trim() == user.password.trim())) {
-      return { message: "La contraseña ingresada es erronea", status: 400 };
-    }
+    // Verificar si la contraseña ingresada coincide con la almacenada usando bcrypt
+    const isMatch = await bcrypt.compare(password, user.password);
 
+    if (!isMatch) {
+      return { message: "La contraseña ingresada es incorrecta", status: 400 };
+    }
+    
     // Crear el payload para el token JWT
     let payload = {
-      id: user.id,
+      id: user._id,
       email: user.email,
       iat: moment().unix(),
       exp: moment().add(1, "days").unix(),
     };
-
+    
     // Codificar el payload en un token JWT utilizando la clave secreta
     let token = jwt.encode(payload, process.env.SECRET);
-
     // Devolver el token generado y un mensaje de éxito
-    return { token: token, status: 200};
+    return { token: token, status: 200 };
   } catch (error) {
-    return { mesagge: error.mesagge, status: 500 };
+    return { message: error.message, status: 500 };
   }
 }
 
