@@ -9,3 +9,9 @@ services:
       - PORT=3000
       - SECRET = 123456789
       - URI = mongodb+srv://admin:L6ipkDKepRVkHNUM@clustermoviematch.bjzmi.mongodb.net/?retryWrites=true&w=majority&appName=ClusterMovieMatch
+    networks:
+      - moviematch_network
+
+networks:
+  moviematch_network:
+    external: true
