@@ -37,14 +37,11 @@ Requisitos previos:
   
 3. Configura las variables de entorno creando un archivo .env en la raíz del proyecto y define las variables necesarias:
 
-- DB_NAME
-- DB_USER
-- DB_PASSWORD
+- PORT
 - SECRET
+- URI
 
 4. Inicia la aplicacion usando los comandos de docker: docker-compose up -d
-
-(En caso de error, ejecuta primero la base de datos y despues el contenedor del backend)
 
 ## Contribución
 
